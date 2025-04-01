@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ollama Chatbox</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body class="bg-gray-100">
+    <div class="container mx-auto px-4 py-8 max-w-4xl">
+        <div class="bg-white rounded-lg shadow-lg p-6">
+            <h1 class="text-2xl font-bold mb-6 text-center text-gray-800">Ollama Chatbox</h1>
+            
+            <div class="mb-4">
+                <select id="modelSelect" class="w-full p-2 border rounded-md">
+                    <option value="smollm2:135m">Smol LM 135M</option>
+                </select>
+            </div>
+
+            <div id="chatContainer" class="h-[500px] overflow-y-auto mb-4 p-4 border rounded-md">
+                <!-- Chat messages will be inserted here -->
+            </div>
+
+            <div class="flex gap-2">
+                <input type="text" id="messageInput" 
+                       class="flex-1 p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                       placeholder="Type your message...">
+                <button id="sendButton" 
+                        class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    Send
+                </button>
+            </div>
+        </div>
+    </div>
+    <script src="/static/script.js"></script>
+</body>
+</html> 

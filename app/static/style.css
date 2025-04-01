@@ -1,0 +1,38 @@
+.message {
+    margin-bottom: 1rem;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    max-width: 80%;
+}
+
+.user-message {
+    background-color: #e3f2fd;
+    margin-left: auto;
+}
+
+.assistant-message {
+    background-color: #f5f5f5;
+    margin-right: auto;
+}
+
+.message-content {
+    word-wrap: break-word;
+}
+
+/* Custom scrollbar */
+#chatContainer::-webkit-scrollbar {
+    width: 6px;
+}
+
+#chatContainer::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+#chatContainer::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 3px;
+}
+
+#chatContainer::-webkit-scrollbar-thumb:hover {
+    background: #555;
+} 
