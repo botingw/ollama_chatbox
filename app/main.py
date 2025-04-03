@@ -7,6 +7,7 @@ from pydantic import BaseModel
 import httpx
 from typing import Optional
 import os
+from .agentic_workflow.crew_ai_poc_ask_cursor import run_research_crew, check_ollama_available
 
 app = FastAPI(title="Ollama Chatbox API")
 
@@ -31,7 +32,17 @@ class ChatResponse(BaseModel):
     response: str
     model: str
 
+class ResearchRequest(BaseModel):
+    topic: str
+    model: str = "smollm2:135m"
+
+class ResearchResponse(BaseModel):
+    result: str
+    model: str
+
 OLLAMA_API_URL = os.getenv("OLLAMA_API_URL", "http://localhost:11434/api/generate")
+# Set base URL for Ollama client
+os.environ["OLLAMA_BASE_URL"] = OLLAMA_API_URL.replace("/api/generate", "")
 
 @app.get("/")
 async def read_root():
@@ -73,6 +84,22 @@ async def chat(request: ChatRequest):
             
     except Exception as e:
         error_detail = f"Error in chat endpoint: {str(e)}, Type: {type(e)}"
+        print(error_detail)
+        raise HTTPException(status_code=500, detail=error_detail)
+
+@app.post("/api/research", response_model=ResearchResponse)
+async def research(request: ResearchRequest):
+    try:
+        # Check if Ollama is available with the requested model
+        available, message = check_ollama_available(model_name=request.model)
+        if not available:
+            raise HTTPException(status_code=503, detail=message)
+        
+        # Run the research crew
+        result = run_research_crew(request.topic, model_name=request.model)
+        return ResearchResponse(result=result, model=request.model)
+    except Exception as e:
+        error_detail = f"Error in research endpoint: {str(e)}, Type: {type(e)}"
         print(error_detail)
         raise HTTPException(status_code=500, detail=error_detail)
 
