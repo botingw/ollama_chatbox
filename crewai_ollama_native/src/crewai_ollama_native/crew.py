@@ -8,6 +8,16 @@ from crewai.project import CrewBase, agent, crew, task
 # from .config.tasks import tasks
 
 from langchain.llms import Ollama
+from langchain_google_genai import ChatGoogleGenerativeAI
+import os
+
+google_api_key = os.getenv("GOOGLE_API_KEY")
+google_llm = ChatGoogleGenerativeAI(
+    model="models/gemini-2.5-pro-exp-03-25",
+    verbose=True,
+    temperature=0.6, # Controls creativity (0.0 = deterministic, 1.0 = max creativity)
+    google_api_key=google_api_key
+)
 
 @CrewBase
 class ResearchCrew:
@@ -16,16 +26,14 @@ class ResearchCrew:
     agents_config = 'config/agents.yaml'
     tasks_config = 'config/tasks.yaml'
     # note: for ollama, seems need add ollama/ in front of the model name
-    ollama_llm = Ollama(model="ollama/smollm2:135m", base_url="http://localhost:11434")
-    # ollama_llm = Ollama(model="ollama/llama3.1", base_url="http://localhost:11434")
-    # ollama_llm = Ollama(model="openhermes", base_url="http://localhost:11434")
+    # ollama_llm = Ollama(model="ollama/smollm2:135m", base_url="http://localhost:11434")
     print("ResearchCrew init")
     
     @agent
     def research_analyst_agent(self) -> Agent:
         return Agent(
             config=self.agents_config['researcher'],
-            llm=self.ollama_llm,
+            llm=self.google_llm,
             allow_delegation=False,
             verbose=True
         )
@@ -34,7 +42,7 @@ class ResearchCrew:
     def content_writer_agent(self) -> Agent:
         return Agent(
             config=self.agents_config['writer'],
-            llm=self.ollama_llm,
+            llm=self.google_llm,
             allow_delegation=False,
             verbose=True
         )

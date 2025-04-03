@@ -22,10 +22,10 @@ if not google_api_key:
 # Instantiate the Gemini model
 # Common models: "gemini-pro", "gemini-1.0-pro", "gemini-1.5-flash-latest", "gemini-1.5-pro-latest"
 # Check Google AI documentation for the latest available models.
+# Note: llm provider in litellm package has bug, where model string always starts with model/, need hardcode replace it with gemini/
+# also google_api_key is not passed to api_key in litellm request, also need hardcode it
 llm = ChatGoogleGenerativeAI(
-    # model="models/gemini-2.0-flash-thinking-exp-01-21", # Or choose another Gemini model
     model="models/gemini-2.5-pro-exp-03-25",
-    # base_url="https://generativelanguage.googleapis.com",
     verbose=True,
     temperature=0.6, # Controls creativity (0.0 = deterministic, 1.0 = max creativity)
     google_api_key=google_api_key
