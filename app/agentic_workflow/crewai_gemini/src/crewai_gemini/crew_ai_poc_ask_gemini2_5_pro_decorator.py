@@ -18,12 +18,12 @@ if not google_api_key:
     raise ValueError("GOOGLE_API_KEY not found in environment variables. "
                      "Make sure to set it in the .env file.")
 
-google_llm = ChatGoogleGenerativeAI(
-    model="models/gemini-2.5-pro-exp-03-25",
-    verbose=True,
-    temperature=0.6, # Controls creativity (0.0 = deterministic, 1.0 = max creativity)
-    google_api_key=google_api_key
-)
+# google_llm = ChatGoogleGenerativeAI(
+#     model="models/gemini-2.5-pro-exp-03-25",
+#     verbose=True,
+#     temperature=0.6, # Controls creativity (0.0 = deterministic, 1.0 = max creativity)
+#     google_api_key=google_api_key
+# )
 
 @CrewBase
 class GeminiResearchCrew:
@@ -35,7 +35,7 @@ class GeminiResearchCrew:
     def senior_researcher_agent(self) -> Agent:
         return Agent(
             config=self.agents_config['senior_researcher'],
-            llm=google_llm,
+            # llm=google_llm,
             allow_delegation=False,
             verbose=True
         )
@@ -44,7 +44,7 @@ class GeminiResearchCrew:
     def senior_writer_agent(self) -> Agent:
         return Agent(
             config=self.agents_config['senior_writer'],
-            llm=google_llm,
+            # llm=google_llm,
             allow_delegation=False,
             verbose=True
         )

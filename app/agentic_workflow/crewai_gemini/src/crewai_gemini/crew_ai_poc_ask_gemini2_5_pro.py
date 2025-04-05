@@ -43,7 +43,7 @@ researcher = Agent(
   You are known for your thoroughness and ability to synthesize complex information.""",
   verbose=True,
   allow_delegation=False, # This agent does not delegate tasks
-  llm=llm # Assign the Gemini model to this agent
+  # llm=llm # Assign the Gemini model to this agent
   # Optional: Add tools like web search here if needed
   # tools=[search_tool]
 )
@@ -57,7 +57,7 @@ writer = Agent(
   suitable for a blog post or internal briefing. You focus on clarity, impact, and accuracy.""",
   verbose=True,
   allow_delegation=False,
-  llm=llm # Assign the Gemini model to this agent
+  # llm=llm # Assign the Gemini model to this agent
 )
 
 # --- Task Definitions ---

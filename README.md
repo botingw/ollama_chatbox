@@ -8,12 +8,15 @@ A modern web-based chat interface for interacting with Ollama's LLM models. This
 - Support for multiple Ollama models
 - Real-time chat interface
 - API endpoints for programmatic access
+- Automated research report generation using CrewAI with both Ollama and Gemini models
 - Comprehensive test coverage
 
 ## Prerequisites
 
 - Docker installed
 - Docker Compose installed
+- API keys for external services:
+  - Gemini API key (if using the Gemini research backend)
 
 ## Development Setup
 
@@ -25,7 +28,7 @@ cd ollama_chatbox
 
 2. Create and activate a conda environment:
 ```bash
-conda create -n ollama_chatbox python=3.8
+conda create -n ollama_chatbox python=3.11
 conda activate ollama_chatbox
 ```
 
@@ -34,7 +37,11 @@ conda activate ollama_chatbox
 pip install -e .
 ```
 
-4. Run the tests:
+4. Configure API keys:
+   - For Gemini research: Add your API key to `app/research/test_gemini_agent/.env`
+   - For Ollama research: Ensure Ollama is properly configured in `app/research/test_ollama_agent/.env`
+
+5. Run the tests:
 ```bash
 pytest
 ```
@@ -74,6 +81,27 @@ http://localhost:8000
   ```
 
 - `GET /api/models`: List available Ollama models
+
+- `POST /api/research`: Initiate a research task using CrewAI
+  ```json
+  {
+    "topic": "Your research topic",
+    "model": "gemini-pro",
+    "backend": "gemini"
+  }
+  ```
+  Response includes:
+  ```json
+  {
+    "stdout_result": "Raw output from the research process",
+    "report_content": "Content of the generated markdown report",
+    "report_filename": "research_topic_20250404_123456_abcdef12.md",
+    "error": "Error message (if any)"
+  }
+  ```
+
+- `GET /api/research/report/{backend}/{filename}`: Download a generated research report
+  - Example: `/api/research/report/gemini/research_baseball_20250404_231550_da419660.md`
 
 ## Contributing
 
