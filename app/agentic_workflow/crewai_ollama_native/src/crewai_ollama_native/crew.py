@@ -12,14 +12,14 @@ class ResearchCrew:
     agents_config = 'config/agents.yaml'
     tasks_config = 'config/tasks.yaml'
     # note: for ollama, seems need add ollama/ in front of the model name
-    ollama_llm = Ollama(model="ollama/smollm2:135m", base_url="http://localhost:11434")
+    # ollama_llm = Ollama(model="ollama/smollm2:135m", base_url="http://localhost:11434")
     print("ResearchCrew init")
     
     @agent
     def research_analyst_agent(self) -> Agent:
         return Agent(
             config=self.agents_config['researcher'],
-            llm=self.ollama_llm,
+            # llm=self.ollama_llm,
             allow_delegation=False,
             verbose=True
         )
@@ -28,7 +28,7 @@ class ResearchCrew:
     def content_writer_agent(self) -> Agent:
         return Agent(
             config=self.agents_config['writer'],
-            llm=self.ollama_llm,
+            # llm=self.ollama_llm,
             allow_delegation=False,
             verbose=True
         )

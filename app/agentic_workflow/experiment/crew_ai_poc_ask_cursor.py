@@ -52,7 +52,7 @@ def run_research_crew(topic, model_name="smollm2:135m"):
         # Create agents
         researcher = create_research_agent(
             role='Research Analyst',
-            goal='Conduct thorough research on the given topic',
+            goal='Gather and analyze information on {topic}',
             backstory='Expert in gathering and analyzing information from various sources',
             model_name=model_name
         )
@@ -60,7 +60,7 @@ def run_research_crew(topic, model_name="smollm2:135m"):
         
         writer = create_research_agent(
             role='Content Writer',
-            goal='Create well-structured content based on research',
+            goal='Summarize the research findings about {topic}',
             backstory='Experienced in writing clear and engaging content',
             model_name=model_name
         )
